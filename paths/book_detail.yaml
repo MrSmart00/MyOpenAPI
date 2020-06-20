@@ -1,0 +1,53 @@
+parameters:
+  - $ref: ./paths/IDs/book_id.yaml
+
+post:
+  security:
+    - JWTAuth: []
+  tags:
+    - Books
+  summary: 本の詳細取得
+  description: 指定されたidに該当する本の詳細情報を取得します
+  operationId: getBookById
+  responses:
+    200:
+      description: successful operation
+      content:
+        application/json:
+          schema:
+            $ref: '../components/book.yaml'
+put:
+  security:
+    - JWTAuth: []
+  tags:
+    - Books
+  summary: 本の詳細更新
+  description: 指定されたidに該当する本の詳細情報を、渡されるパラメータに基づいて、更新します
+  operationId: updateBook
+  requestBody:
+    description: book parameter
+    content:
+      application/json:
+        schema:
+          $ref: '../components/book.yaml'
+    required: true
+  responses:
+    200:
+      description: successful operation
+      content:
+        application/json:
+          schema:
+            $ref: '../components/book.yaml'
+  x-codegen-request-body-name: book
+delete:
+  security:
+    - JWTAuth: []
+  tags:
+    - Books
+  summary: 本の削除
+  description: 指定されたidに該当する本を削除します
+  operationId: deleteBook
+  responses:
+    204:
+      description: successful operation
+      content: {}

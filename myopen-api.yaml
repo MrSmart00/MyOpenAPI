@@ -1,0 +1,29 @@
+openapi: 3.0.3
+info:
+  title: My OpenAPI
+  description: API for Tests
+  version: 1.0.0
+
+servers:
+  - url: https://my-openapi/v1,
+    description: 本番用
+  - url: https://stg.my-openapi/v1
+    description: ステージング用
+  - url: https://dev.my-openapi/v1
+    description: 開発用
+
+components:
+  securitySchemes:
+    JWTAuth:
+      in: header
+      name: Authorization
+      type: apiKey
+  
+tags:
+  - name: Books
+
+paths:
+  /books:
+    $ref: ./paths/books.yaml
+  /books/{book_id}:
+    $ref: ./paths/book_detail.yaml
