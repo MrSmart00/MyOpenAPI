@@ -10,7 +10,7 @@ get:
       content:
         application/json:
           schema:
-            title: books
+            title: contents
             type: array
             items:
               oneOf:
@@ -38,7 +38,3 @@ post:
   responses:
     200:
       description: successful operation
-      content:
-        application/json:
-          schema:
-            $ref: '../components/book.yaml'

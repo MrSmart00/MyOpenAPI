@@ -31,7 +31,7 @@
             "content" : {
               "application/json" : {
                 "schema" : {
-                  "title" : "books",
+                  "title" : "contents",
                   "type" : "array",
                   "items" : {
                     "discriminator" : {
@@ -67,14 +67,7 @@
         },
         "responses" : {
           "200" : {
-            "description" : "successful operation",
-            "content" : {
-              "application/json" : {
-                "schema" : {
-                  "$ref" : "#/components/schemas/book"
-                }
-              }
-            }
+            "description" : "successful operation"
           }
         }
       }
@@ -163,7 +156,54 @@
   "components" : {
     "schemas" : {
       "book" : {
-        "required" : [ "author", "id", "release_date", "title" ],
+        "allOf" : [ {
+          "$ref" : "#/components/schemas/content"
+        }, {
+          "required" : [ "author", "release_date" ],
+          "type" : "object",
+          "properties" : {
+            "author" : {
+              "type" : "string",
+              "description" : "著者名",
+              "example" : "著者名"
+            },
+            "translator" : {
+              "type" : "string",
+              "description" : "翻訳者",
+              "nullable" : true,
+              "example" : "翻訳者"
+            }
+          }
+        } ]
+      },
+      "magazine" : {
+        "allOf" : [ {
+          "$ref" : "#/components/schemas/content"
+        }, {
+          "required" : [ "publish", "publisher" ],
+          "type" : "object",
+          "properties" : {
+            "publisher" : {
+              "type" : "string",
+              "description" : "出版社",
+              "example" : "集英社"
+            },
+            "publish" : {
+              "type" : "string",
+              "description" : "刊行形態",
+              "example" : "weekly",
+              "enum" : [ "daily", "weekly", "monthly" ]
+            }
+          }
+        } ]
+      },
+      "book_id" : {
+        "type" : "integer",
+        "format" : "int32",
+        "example" : 999
+      },
+      "content" : {
+        "required" : [ "id", "release_date", "title", "url" ],
         "type" : "object",
         "properties" : {
           "id" : {
@@ -171,18 +211,14 @@
           },
           "title" : {
             "type" : "string",
-            "description" : "本のタイトル",
-            "example" : "初めてのThree.js 第2版 ―WebGLのためのJavaScript 3Dライブラリ"
+            "description" : "タイトル",
+            "example" : "名前"
           },
-          "author" : {
+          "url" : {
             "type" : "string",
-            "description" : "著者名",
-            "example" : "Jos Dirksen"
-          },
-          "translator" : {
-            "type" : "string",
-            "description" : "翻訳者",
-            "example" : "あんどうやすし"
+            "description" : "コンテンツのURL",
+            "format" : "uri",
+            "example" : "https://github.com/MrSmart00/MyOpenAPI"
           },
           "release_date" : {
             "pattern" : "YYYY-MM-DDThh:mm:ssZ",
@@ -190,50 +226,8 @@
             "description" : "発売日",
             "format" : "date-time",
             "example" : "1990-12-31T15:59:30+09:00"
-          },
-          "url" : {
-            "type" : "string",
-            "description" : "本のURL",
-            "format" : "uri",
-            "example" : "https://www.amazon.co.jp/dp/4873117704"
           }
         }
-      },
-      "magazine" : {
-        "required" : [ "id", "publish", "publisher", "title", "url" ],
-        "type" : "object",
-        "properties" : {
-          "id" : {
-            "$ref" : "#/components/schemas/book_id"
-          },
-          "title" : {
-            "type" : "string",
-            "description" : "雑誌タイトル",
-            "example" : "週刊少年ジャンプ"
-          },
-          "publisher" : {
-            "type" : "string",
-            "description" : "出版社",
-            "example" : "集英社"
-          },
-          "publish" : {
-            "type" : "string",
-            "description" : "刊行形態",
-            "example" : "weekly",
-            "enum" : [ "daily", "weekly", "monthly" ]
-          },
-          "url" : {
-            "type" : "string",
-            "description" : "本のURL",
-            "format" : "uri",
-            "example" : "https://www.amazon.co.jp/dp/4873117704"
-          }
-        }
-      },
-      "book_id" : {
-        "type" : "integer",
-        "format" : "int32",
-        "example" : 999
       },
       "body" : {
         "discriminator" : {

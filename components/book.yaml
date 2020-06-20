@@ -1,32 +1,15 @@
-type: object
-required:
-  - author
-  - id
-  - release_date
-  - title
-properties:
-  id:
-    $ref: ./IDs/book_id.yaml
-  title:
-    type: string
-    description: 本のタイトル
-    example: 初めてのThree.js 第2版 ―WebGLのためのJavaScript 3Dライブラリ
-  author:
-    type: string
-    description: 著者名
-    example: Jos Dirksen
-  translator:
-    type: string
-    description: 翻訳者
-    example: あんどうやすし
-  release_date:
-    type: string
-    description: 発売日
-    format: date-time
-    pattern: YYYY-MM-DDThh:mm:ssZ
-    example: "1990-12-31T15:59:30+09:00"
-  url:
-    type: string
-    description: 本のURL
-    format: uri
-    example: https://www.amazon.co.jp/dp/4873117704
+allOf:
+  - $ref: ./content.yaml
+  - required:
+      - author
+      - release_date
+    properties:
+      author:
+        type: string
+        description: 著者名
+        example: 著者名
+      translator:
+        type: string
+        nullable: true
+        description: 翻訳者
+        example: 翻訳者

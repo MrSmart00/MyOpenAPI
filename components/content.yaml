@@ -1,0 +1,24 @@
+type: object
+required:
+  - id
+  - title
+  - url
+  - release_date
+properties:
+  id:
+    $ref: ./IDs/book_id.yaml
+  title:
+    type: string
+    description: タイトル
+    example: 名前
+  url:
+    type: string
+    description: コンテンツのURL
+    format: uri
+    example: https://github.com/MrSmart00/MyOpenAPI
+  release_date:
+    type: string
+    description: 発売日
+    format: date-time
+    pattern: YYYY-MM-DDThh:mm:ssZ
+    example: "1990-12-31T15:59:30+09:00"

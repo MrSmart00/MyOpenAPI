@@ -1,31 +1,18 @@
-type: object
-required:
-  - id
-  - title
-  - publisher
-  - publish
-  - url
-properties:
-  id:
-    $ref: ./IDs/book_id.yaml
-  title:
-    type: string
-    description: 雑誌タイトル
-    example: 週刊少年ジャンプ
-  publisher:
-    type: string
-    description: 出版社
-    example: 集英社
-  publish:
-    type: string
-    enum:
-      - daily
-      - weekly
-      - monthly
-    description: "刊行形態"
-    example: weekly
-  url:
-    type: string
-    description: 本のURL
-    format: uri
-    example: https://www.amazon.co.jp/dp/4873117704
+allOf:
+  - $ref: ./content.yaml
+  - required:
+      - publisher
+      - publish
+    properties:
+      publisher:
+        type: string
+        description: 出版社
+        example: 集英社
+      publish:
+        type: string
+        enum:
+          - daily
+          - weekly
+          - monthly
+        description: "刊行形態"
+        example: weekly
