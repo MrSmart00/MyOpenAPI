@@ -1,0 +1,5 @@
+#!/bin/bash
+ROOT=$(cd $(dirname $0)/../;pwd)
+IMAGE=swaggerapi/swagger-codegen-cli-v3:3.0.20
+
+docker run -v ${ROOT}:/app -w /app ${IMAGE} generate -i myopen-api.yaml -l openapi -o dist/

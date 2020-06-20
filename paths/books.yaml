@@ -1,0 +1,36 @@
+get:
+  tags:
+    - Books
+  summary: 本の一覧取得
+  description: これまでに登録されている本の一覧を取得します
+  operationId: getBooksList
+  responses:
+    200:
+      description: successful operation
+      content:
+        application/json:
+          schema:
+            title: books
+            type: array
+            items:
+              $ref: '../components/book.yaml'
+post:
+  tags:
+    - Books
+  summary: 本の登録
+  description: 渡されるパラメータに基づいて、新しい本を登録します
+  operationId: createBook
+  requestBody:
+    description: book parameter
+    content:
+      application/json:
+        schema:
+          $ref: '../components/book.yaml'
+    required: true
+  responses:
+    200:
+      description: successful operation
+      content:
+        application/json:
+          schema:
+            $ref: '../components/book.yaml'

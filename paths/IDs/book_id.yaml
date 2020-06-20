@@ -1,0 +1,6 @@
+in: path
+name: book_id
+description: 書籍ID
+required: true
+schema:
+  $ref: ../components/IDs/book_id.yaml
