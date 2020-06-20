@@ -13,7 +13,11 @@ get:
             title: books
             type: array
             items:
-              $ref: '../components/book.yaml'
+              oneOf:
+                - $ref: '../components/book.yaml'
+                - $ref: '../components/magazine.yaml'
+              discriminator:
+                propertyName: contentType
 post:
   tags:
     - Books
@@ -25,7 +29,11 @@ post:
     content:
       application/json:
         schema:
-          $ref: '../components/book.yaml'
+          oneOf:
+            - $ref: '../components/book.yaml'
+            - $ref: '../components/magazine.yaml'
+          discriminator:
+            propertyName: contentType
     required: true
   responses:
     200:

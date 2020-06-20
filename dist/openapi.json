@@ -34,7 +34,14 @@
                   "title" : "books",
                   "type" : "array",
                   "items" : {
-                    "$ref" : "#/components/schemas/book"
+                    "discriminator" : {
+                      "propertyName" : "contentType"
+                    },
+                    "oneOf" : [ {
+                      "$ref" : "#/components/schemas/book"
+                    }, {
+                      "$ref" : "#/components/schemas/magazine"
+                    } ]
                   }
                 }
               }
@@ -52,7 +59,7 @@
           "content" : {
             "application/json" : {
               "schema" : {
-                "$ref" : "#/components/schemas/book"
+                "$ref" : "#/components/schemas/body"
               }
             }
           },
@@ -192,10 +199,51 @@
           }
         }
       },
+      "magazine" : {
+        "required" : [ "id", "publish", "publisher", "title", "url" ],
+        "type" : "object",
+        "properties" : {
+          "id" : {
+            "$ref" : "#/components/schemas/book_id"
+          },
+          "title" : {
+            "type" : "string",
+            "description" : "雑誌タイトル",
+            "example" : "週刊少年ジャンプ"
+          },
+          "publisher" : {
+            "type" : "string",
+            "description" : "出版社",
+            "example" : "集英社"
+          },
+          "publish" : {
+            "type" : "string",
+            "description" : "刊行形態",
+            "example" : "weekly",
+            "enum" : [ "daily", "weekly", "monthly" ]
+          },
+          "url" : {
+            "type" : "string",
+            "description" : "本のURL",
+            "format" : "uri",
+            "example" : "https://www.amazon.co.jp/dp/4873117704"
+          }
+        }
+      },
       "book_id" : {
         "type" : "integer",
         "format" : "int32",
         "example" : 999
+      },
+      "body" : {
+        "discriminator" : {
+          "propertyName" : "contentType"
+        },
+        "oneOf" : [ {
+          "$ref" : "#/components/schemas/book"
+        }, {
+          "$ref" : "#/components/schemas/magazine"
+        } ]
       }
     },
     "securitySchemes" : {
