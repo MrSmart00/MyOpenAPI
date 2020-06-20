@@ -15,7 +15,23 @@ post:
       content:
         application/json:
           schema:
-            $ref: '../components/book.yaml'
+            oneOf:
+              - $ref: '../components/book.yaml'
+              - $ref: '../components/magazine.yaml'
+            discriminator:
+              propertyName: contentType
+    default:
+      description: 標準エラー
+      content:
+        application/json:
+          schema:
+            $ref: ../components/error.yaml
+    '401':
+      description: 認証エラー
+      content:
+        application/json:
+          schema:
+            $ref: ../components/error.yaml
 put:
   security:
     - JWTAuth: []
@@ -29,16 +45,27 @@ put:
     content:
       application/json:
         schema:
-          $ref: '../components/book.yaml'
+          oneOf:
+            - $ref: '../components/book.yaml'
+            - $ref: '../components/magazine.yaml'
+          discriminator:
+            propertyName: contentType
     required: true
   responses:
     200:
       description: successful operation
+    default:
+      description: 標準エラー
       content:
         application/json:
           schema:
-            $ref: '../components/book.yaml'
-  x-codegen-request-body-name: book
+            $ref: ../components/error.yaml
+    '401':
+      description: 認証エラー
+      content:
+        application/json:
+          schema:
+            $ref: ../components/error.yaml
 delete:
   security:
     - JWTAuth: []
@@ -50,4 +77,15 @@ delete:
   responses:
     204:
       description: successful operation
-      content: {}
+    default:
+      description: 標準エラー
+      content:
+        application/json:
+          schema:
+            $ref: ../components/error.yaml
+    '401':
+      description: 認証エラー
+      content:
+        application/json:
+          schema:
+            $ref: ../components/error.yaml

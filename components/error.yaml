@@ -1,0 +1,13 @@
+type: object
+required:
+  - title
+  - message
+properties:
+  title:
+    type: string
+    description: "エラー表示タイトル"
+    example: "不明なエラー"
+  message:
+    type: string
+    description: "エラー表示メッセージ"
+    example: "データ取得に失敗しました"
